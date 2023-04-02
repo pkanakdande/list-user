@@ -7,19 +7,32 @@ const DBmodel=require("./conn/conn.js")
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
+app.set("views","views")
+app.set("view engine","ejs")
 
-app.get("/list",(req,res)=>{
-    res.render("list.ejs")
+app.get("/data",async(req,res)=>{
+    let form=await DBmodel.find()
+    res.render("list",{form})
 })
+
+
+app.get("/form",(req,res)=>{
+    res.render("form")
+  
+})
+
+
 
 app.get("/",(req,res)=>{
     res.send("hello")
+   
+    
 })
 
-app.set("views","view")
-app.set("view engine","ejs")
 
-app.post("/list", async(req,res)=>{
+
+
+app.post("/form", async(req,res)=>{
     console.log(req.body)
     try{
       
@@ -29,9 +42,10 @@ app.post("/list", async(req,res)=>{
         age:req.body.age,
         city:req.body.city,
         profession:req.body.profession
+  
     })
-      const data=await createNew.save()
-      res.send(data)
+      await createNew.save()
+    res.redirect("/data")
 
     }
     catch(e){
