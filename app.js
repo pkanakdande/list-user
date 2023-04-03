@@ -15,6 +15,12 @@ app.get("/data",async(req,res)=>{
     res.render("list",{form})
 })
 
+app.get("/user/hight",(req,res)=>{
+    res.render("form")
+})
+
+
+
 
 app.get("/form",(req,res)=>{
     res.render("form")
@@ -22,15 +28,10 @@ app.get("/form",(req,res)=>{
 })
 
 
-
 app.get("/",(req,res)=>{
     res.send("hello")
    
-    
 })
-
-
-
 
 app.post("/form", async(req,res)=>{
     console.log(req.body)
